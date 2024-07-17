@@ -40,6 +40,8 @@ public class Rating {
     @Column(name = "rate", nullable = false)
     private int rating;
 
+    private Long grade;
+
     private String comment;
 
     @CreatedDate
