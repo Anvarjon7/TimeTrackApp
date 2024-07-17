@@ -1,6 +1,6 @@
-package de.telran.timetrackinapp.entity.timeEntry;
+package de.telran.timetrackinapp.model.entity.timeEntry;
 
-import de.telran.timetrackinapp.entity.user.User;
+import de.telran.timetrackinapp.model.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

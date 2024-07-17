@@ -1,6 +1,6 @@
 package de.telran.timetrackinapp.repository;
 
-import de.telran.timetrackinapp.entity.timeEntry.TimeEntry;
+import de.telran.timetrackinapp.model.entity.timeEntry.TimeEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

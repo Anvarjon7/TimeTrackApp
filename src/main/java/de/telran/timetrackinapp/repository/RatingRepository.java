@@ -1,6 +1,6 @@
 package de.telran.timetrackinapp.repository;
 
-import de.telran.timetrackinapp.entity.rating.Rating;
+import de.telran.timetrackinapp.model.entity.rating.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
