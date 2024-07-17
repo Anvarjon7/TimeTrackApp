@@ -1,7 +1,7 @@
-package de.telran.timetrackinapp.entity.rating;
+package de.telran.timetrackinapp.model.entity.rating;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import de.telran.timetrackinapp.entity.user.User;
+import de.telran.timetrackinapp.model.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

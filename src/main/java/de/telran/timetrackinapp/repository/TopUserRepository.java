@@ -1,6 +1,6 @@
 package de.telran.timetrackinapp.repository;
 
-import de.telran.timetrackinapp.entity.user.User;
+import de.telran.timetrackinapp.model.entity.user.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
