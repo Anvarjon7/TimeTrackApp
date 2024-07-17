@@ -9,5 +9,4 @@ public class TimeTrackinAppApplication {
     public static void main(String[] args) {
         SpringApplication.run(TimeTrackinAppApplication.class, args);
     }
-
 }
