@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 
-    List<Rating> findByToUserId(Long userId);
-
-    List<Rating> findByFromUserId(Long userId);
-
-    List<Rating> findByToUserIdAndRating(Long toUserId, int rating);
-
-    @Query("SELECT AVG(r.grade) FROM Rating r WHERE r.toUserId = :userId")
-    Double findByAverageRatingByUserId(@Param("userId") Long userId);
+//    List<Rating> findByToUserId(Long userId);
+//
+//    List<Rating> findByFromUserId(Long userId);
+//
+//    List<Rating> findByToUserIdAndRating(Long toUserId, int rating);
+//
+//    @Query("SELECT AVG(r.grade) FROM Rating r WHERE r.toUserId = :userId")
+//    Double findByAverageRatingByUserId(@Param("userId") Long userId);
 }
