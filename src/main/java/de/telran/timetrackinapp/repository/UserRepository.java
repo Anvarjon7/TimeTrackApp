@@ -15,6 +15,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.id = :id")
     Optional<User> findByIdWithRatings(Long id);
 
+    @EntityGraph(value = "User.withTimeEntries", type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT u FROM User u WHERE u.id = :id")
+    Optional<User> findByIdWithTimeEntries(Long id);
+
+    @EntityGraph(value = "User.withRatingsAndTimeEntries", type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT u FROM User u WHERE u.id = :id")
+    Optional<User> findByIdWithRatingsAndTimeEntries(Long id);
+
+
     Optional<User> findByIdAndEmail(Long id, String email);
 
     Optional<User> findById(Long id);

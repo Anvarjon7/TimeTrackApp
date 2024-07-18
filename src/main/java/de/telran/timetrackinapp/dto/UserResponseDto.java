@@ -10,6 +10,7 @@ public record UserResponseDto(
         String firstName,
         String lastName,
         String email,
+        double averageRating,
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH.mm.ss")
         Timestamp createdAt
