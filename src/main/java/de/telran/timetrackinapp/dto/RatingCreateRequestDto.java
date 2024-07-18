@@ -13,7 +13,7 @@ public record RatingCreateRequestDto(
         Long id,
 
         @NotNull(message = "FromUser can not be empty")
-        Long fromUser,
+        Long fromUserId,
 
         @NotNull(message = "ToUserId can not be empty")
         Long toUserId,
@@ -22,7 +22,7 @@ public record RatingCreateRequestDto(
         @Max(value = 5, message = "Rating must be at most 5")
         int rating,
 
-        @Min(0)
+        @Min(1)
         @Max(5)
         Long grade,
 

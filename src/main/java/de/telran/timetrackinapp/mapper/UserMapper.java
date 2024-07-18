@@ -25,6 +25,7 @@ public class UserMapper implements Mapper<User, UserResponseDto> {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
+                user.getAverageRating(),
                 user.getCreationDate()
         );
     }

@@ -1,40 +1,38 @@
 package de.telran.timetrackinapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import de.telran.timetrackinapp.model.entity.user.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
-public record UserRequestDto(
-        @NotBlank(message = "Invalid firstname : Empty name")
-        @Size(max = 150)
-        String firstName,
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserRequestDto{
 
-        @NotBlank(message = "Invalid lastname : Empty lastname")
-        @Size(max = 150)
-        String lastName,
+    @NotBlank(message = "Invalid firstName : Empty name")
+    @Size(max = 150)
+    private String firstName;
 
-        @NotBlank
-        @Email(message = "Invalid email")
-        String email,
+    @NotBlank(message = "Invalid lastName : Empty lastName")
+    @Size(max = 150)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String lastName;
 
-        @NotBlank @Pattern(regexp = PASSWORD_REGEX, message = BAD_PASSWORD_MESSAGE)
-        String password,
+    @NotBlank
+    @Email(message = "Invalid email")
+    private String email;
 
-        @NotBlank @Pattern(regexp = PASSWORD_REGEX, message = BAD_PASSWORD_MESSAGE)
-        String passwordConfirmation,
+    @Size(min = 5, max = 30, message = "Password must be between 8 and 30 characters")
+    @Pattern(
+            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{5,30}$",
+            message = "Password must be between 5 and 30 characters, and include at least one digit, one lowercase letter, one uppercase letter, and one special character (!@#$%^&*)"
+    )
+    private String password;
 
-        Role role
-) {
-
-
-    private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$";
-
-    private static final String BAD_PASSWORD_MESSAGE = "Password must be min 8 symbols, contains lower case," +
-            "digit and specials symbols (@#$%^&+=) ";
-
-    public boolean isPasswordMatch() {
-        return password.equals(passwordConfirmation);
-    }
+    private Role role;
 }

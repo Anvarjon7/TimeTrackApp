@@ -50,14 +50,17 @@ public class User {
     @Column(name = "password", nullable = false, length = 50)
     private String password;
 
+    @Column(name = "average_rating")
+    private double averageRating;
+
     @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
     @Column(name = "created_at", nullable = false, updatable = false)
     private Timestamp creationDate;
 
-    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private List<Role> roles;
+    @Column(name = "role")
+    private Role role;
 
     @OneToMany(mappedBy = "toUserId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rating> ratings;

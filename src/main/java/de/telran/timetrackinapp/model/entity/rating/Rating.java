@@ -29,7 +29,7 @@ public class Rating {
     private Long id;
 
     @Column(nullable = false)
-    private Long fromUser;
+    private Long fromUserId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_user_id", nullable = false)
