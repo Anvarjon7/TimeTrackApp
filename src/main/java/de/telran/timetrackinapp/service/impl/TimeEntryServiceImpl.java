@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,19 +34,19 @@ public class TimeEntryServiceImpl implements TimeEntryService {
         return timeEntryRepository.save(timeEntry);
     }
 
-    @Override
-    public TimeEntry update(Long id, TimeEntryRequestDto requestDto) {
-
+//    @Override
+//    public TimeEntry update(Long id, TimeEntryRequestDto requestDto) {
+//
 //        User user = userService.findById(id);
-
-        TimeEntry existingTimeEntry = timeEntryRepository.findByUserId(id);
-
-        existingTimeEntry.setCategory(requestDto.category());
-        existingTimeEntry.setTimeSpent(requestDto.timeSpent());
-//        existingTimeEntry.setUser(user);
-
-        return timeEntryRepository.save(existingTimeEntry);
-    }
+//
+////        TimeEntry existingTimeEntry = timeEntryRepository.findByUserId(id);
+//
+////        existingTimeEntry.setCategory(requestDto.category());
+////        existingTimeEntry.setTimeSpent(requestDto.timeSpent());
+//////        existingTimeEntry.setUser(user);
+////
+////        return timeEntryRepository.save(existingTimeEntry);
+//    }
 
     @Override
     public void delete(Long id) {

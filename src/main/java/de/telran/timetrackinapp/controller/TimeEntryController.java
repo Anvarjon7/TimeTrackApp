@@ -7,6 +7,7 @@ import de.telran.timetrackinapp.model.entity.timeEntry.TimeEntry;
 import de.telran.timetrackinapp.service.TimeEntryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,21 +22,21 @@ import java.util.stream.Collectors;
 public class TimeEntryController {
 
     private final TimeEntryService timeEntryService;
-    private final TimeEntryMapper timeEntrymapper;
+    private final TimeEntryMapper timeEntryMapper;
 
     @PostMapping("/create")
     public ResponseEntity<TimeEntryResponseDto> create(@Valid @RequestBody TimeEntryRequestDto requestDto){
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(timeEntrymapper.toDto(timeEntryService.create(requestDto)));
+                .body(timeEntryMapper.toDto(timeEntryService.create(requestDto)));
     };
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TimeEntryResponseDto> update(Long id, TimeEntryRequestDto requestDto){
-
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(timeEntrymapper.toDto(timeEntryService.update(id,requestDto)));
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<TimeEntryResponseDto> update(Long id, TimeEntryRequestDto requestDto){
+//
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(timeEntrymapper.toDto(timeEntryService.update(id,requestDto)));
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id){
@@ -44,29 +45,33 @@ public class TimeEntryController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<TimeEntryResponseDto>> getTimeEntriesForUser(Long userId){
+    @GetMapping("{id}")
+    public ResponseEntity<List<TimeEntryResponseDto>> getTimeEntriesForUser(@PathVariable Long id){
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(timeEntryService.getTimeEntriesForUser(userId).stream()
-                        .map(timeEntrymapper::toDto)
+                .body(timeEntryService.getTimeEntriesForUser(id).stream()
+                        .map(timeEntryMapper::toDto)
                         .collect(Collectors.toList()));
     }
 
     @GetMapping("/betweenDates")
-    public ResponseEntity<List<TimeEntryResponseDto>> getTimeEntriesForUserBetweenDates(Long userId, LocalDate startDate, LocalDate endDate){
+    public ResponseEntity<List<TimeEntryResponseDto>> getTimeEntriesForUserBetweenDates(
+            @RequestParam Long userId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(timeEntryService.getTimeEntriesForUserBetweenDates(userId,startDate,endDate).stream()
-                        .map(timeEntrymapper::toDto)
-                        .collect(Collectors.toList()));
+        List<TimeEntry> timeEntries = timeEntryService.getTimeEntriesForUserBetweenDates(userId, startDate, endDate);
+        List<TimeEntryResponseDto> response = timeEntries.stream()
+                .map(timeEntryMapper::toDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getById")
-    public ResponseEntity<TimeEntryResponseDto> findById(Long id){
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<TimeEntryResponseDto> findById(@PathVariable Long id){
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(timeEntrymapper.toDto(timeEntryService.findById(id)));
+                .body(timeEntryMapper.toDto(timeEntryService.findById(id)));
     }
 
 }

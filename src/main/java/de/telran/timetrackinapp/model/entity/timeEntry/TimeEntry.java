@@ -35,7 +35,7 @@ public class TimeEntry {
     @Column(name = "timeSpent", nullable = false)
     private Integer timeSpent;
 
-    @Column(name = "user_id",insertable = false, updatable = false)
+    @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})

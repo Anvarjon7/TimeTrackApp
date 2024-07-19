@@ -8,7 +8,6 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Set;
 
 @Data

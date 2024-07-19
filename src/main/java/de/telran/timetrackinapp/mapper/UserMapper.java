@@ -2,8 +2,6 @@ package de.telran.timetrackinapp.mapper;
 
 import de.telran.timetrackinapp.dto.FullUserResponseDto;
 import de.telran.timetrackinapp.dto.UserResponseDto;
-import de.telran.timetrackinapp.model.entity.rating.Rating;
-import de.telran.timetrackinapp.model.entity.timeEntry.TimeEntry;
 import de.telran.timetrackinapp.model.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

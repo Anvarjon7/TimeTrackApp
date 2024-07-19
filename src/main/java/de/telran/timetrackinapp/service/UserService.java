@@ -25,5 +25,4 @@ public interface UserService {
     Optional<User> findByIdWithRatings(Long id);
 
     void save(User user);
-//    void deleteLowRatedUsers(int retainCount);
 }

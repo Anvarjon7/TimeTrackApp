@@ -5,8 +5,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.sql.Timestamp;
-
 public record RatingCreateRequestDto(
 
         @NotNull(message = "FromUser can not be empty")

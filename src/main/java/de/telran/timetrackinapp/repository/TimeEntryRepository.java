@@ -19,9 +19,9 @@ public interface TimeEntryRepository extends JpaRepository<TimeEntry, Long> {
     Optional<TimeEntry> findByIdWithUser(Long id);
 
     @Query("SELECT t FROM TimeEntry t WHERE t.userId = :id")
-    TimeEntry findByUserId(@Param("id") Long id);
+    List<TimeEntry> findByUserId(Long id);
 
-    @Query("SELECT t FROM TimeEntry t WHERE t.user = :userId AND t.date BETWEEN :startDate AND :endDate")
+    @Query("SELECT t FROM TimeEntry t WHERE t.user.id = :userId AND t.date BETWEEN :startDate AND :endDate")
     List<TimeEntry> findByUserIdAndDateBetween(@Param("userId") Long id, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
     Optional<TimeEntry> findById(Long id);

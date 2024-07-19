@@ -10,7 +10,7 @@ public interface TimeEntryService {
 
     TimeEntry create(TimeEntryRequestDto requestDto);
 
-    TimeEntry update(Long id, TimeEntryRequestDto requestDto);
+//    TimeEntry update(Long id, TimeEntryRequestDto requestDto);
 
     void delete(Long id);
 

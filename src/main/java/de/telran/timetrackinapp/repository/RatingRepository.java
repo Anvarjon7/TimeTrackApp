@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,5 +16,5 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     Optional<Rating> findByIdWithUser(Long id);
 
     @Query("SELECT r FROM  Rating r WHERE r.toUser = :toUserId")
-    List<Rating> findByToUserId(@Param("toUserId")Long toUserId);
+    List<Rating> findByToUserId(@Param("toUserId") Long toUserId);
 }
