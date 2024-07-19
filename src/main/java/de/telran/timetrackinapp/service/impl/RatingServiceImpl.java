@@ -1,6 +1,7 @@
 package de.telran.timetrackinapp.service.impl;
 
 import de.telran.timetrackinapp.dto.RatingCreateRequestDto;
+import de.telran.timetrackinapp.exception.InvalidUserException;
 import de.telran.timetrackinapp.model.entity.rating.Rating;
 import de.telran.timetrackinapp.model.entity.user.User;
 import de.telran.timetrackinapp.repository.RatingRepository;
@@ -28,7 +29,7 @@ public class RatingServiceImpl implements RatingService {
         User toUser = userService.findById(dto.toUserId());
 
         if (fromUser == null || toUser == null) {
-            throw new IllegalArgumentException("Both fromUser and toUser must be valid users");
+            throw new InvalidUserException("Both fromUser and toUser must be valid users");
         }
 
         log.debug("Creating rating from user: {} to user: {}", fromUser.getId(), toUser.getId());
