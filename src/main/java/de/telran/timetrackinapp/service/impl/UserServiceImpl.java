@@ -1,6 +1,8 @@
 package de.telran.timetrackinapp.service.impl;
 
 import de.telran.timetrackinapp.dto.UserRequestDto;
+import de.telran.timetrackinapp.exception.UserAlreadyExistException;
+import de.telran.timetrackinapp.exception.UserNotFoundException;
 import de.telran.timetrackinapp.model.entity.user.User;
 import de.telran.timetrackinapp.repository.UserRepository;
 import de.telran.timetrackinapp.service.UserService;
@@ -23,7 +25,7 @@ public class UserServiceImpl implements UserService {
     public User register(UserRequestDto userRequestDto) {
 
         if (userRepository.existsByEmail(userRequestDto.getEmail())) {
-            throw new EntityExistsException("User already exists with email " + userRequestDto.getEmail() + "!"); // #TODO own Exception
+            throw new UserAlreadyExistException("User already exists with email " + userRequestDto.getEmail() + "!");
         }
 
 
@@ -75,14 +77,14 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
 
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("User with email " + email + " not found!")); // #TODO own Exception
+                .orElseThrow(() -> new UserNotFoundException("User with email " + email + " not found!"));
     }
 
     @Override
     public void delete(Long id) {
 
         if (!userRepository.existsById(id)) {
-            throw new EntityNotFoundException("User with id " + id + " not found!"); // #TODO own Exception
+            throw new UserNotFoundException("User with id " + id + " not found!");
         }
         userRepository.deleteById(id);
     }
@@ -91,7 +93,7 @@ public class UserServiceImpl implements UserService {
     public User findById(Long id) {
 
         return userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found!")); // #TODO own Exception
+                .orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found!"));
     }
 
 //    @Override

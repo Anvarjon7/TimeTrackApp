@@ -1,6 +1,7 @@
 package de.telran.timetrackinapp.service.impl;
 
 import de.telran.timetrackinapp.dto.TimeEntryRequestDto;
+import de.telran.timetrackinapp.exception.TimeEntryNotFoundException;
 import de.telran.timetrackinapp.model.entity.timeEntry.TimeEntry;
 import de.telran.timetrackinapp.model.entity.user.User;
 import de.telran.timetrackinapp.repository.TimeEntryRepository;
@@ -71,6 +72,6 @@ public class TimeEntryServiceImpl implements TimeEntryService {
     @Override
     public TimeEntry findById(Long id) {
         return timeEntryRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("TimeEntry with id " + id + " not found")); // #Todo own Exception
+                .orElseThrow(() -> new TimeEntryNotFoundException("TimeEntry with id " + id + " not found"));
     }
 }
