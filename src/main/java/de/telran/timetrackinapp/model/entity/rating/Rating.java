@@ -1,5 +1,6 @@
 package de.telran.timetrackinapp.model.entity.rating;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import de.telran.timetrackinapp.model.entity.user.User;
 import jakarta.persistence.*;
@@ -13,13 +14,13 @@ import java.sql.Timestamp;
 @Builder(toBuilder = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "toUserId")
-@ToString(exclude = "toUserId")
+@EqualsAndHashCode(exclude = "user")
+@ToString(exclude = "user")
 @Table(name = "rating")
 @NamedEntityGraphs({
         @NamedEntityGraph(
                 name = "rating.withUser",
-                attributeNodes = @NamedAttributeNode("toUserId")
+                attributeNodes = @NamedAttributeNode("user")
         )
 })
 public class Rating {
@@ -28,26 +29,25 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long fromUserId;
+    @Column(name = "fromUserId", nullable = false)
+    private Long fromUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "to_user_id", nullable = false)
-    @Getter
-    @Setter
-    private User toUserId;
+    @Column(name = "toUserId", nullable = false)
+    private Long toUser;
 
     @Column(name = "rate", nullable = false)
-    private int rating;
-
     private Long grade;
 
     private String comment;
 
     @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    @Column(name = "created_on", nullable = false, updatable = false)
-    private Timestamp createdOn;
+    @Column(name = "creationDate", nullable = false, updatable = false)
+    private Timestamp createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JsonBackReference
+    private User user;
 }
 
 

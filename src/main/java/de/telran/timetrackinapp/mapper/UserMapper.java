@@ -26,7 +26,7 @@ public class UserMapper implements Mapper<User, UserResponseDto> {
                 user.getLastName(),
                 user.getEmail(),
                 user.getAverageRating(),
-                user.getCreationDate()
+                user.getCreatedAt()
         );
     }
 
@@ -49,8 +49,8 @@ public class UserMapper implements Mapper<User, UserResponseDto> {
     public FullUserResponseDto toFullUserResponseDto(User user) {
         return new FullUserResponseDto(
                 toDto(user),
-                ratingMapper.toDtoSet((Set<Rating>) user.getRatings()),
-                timeEntryMapper.toDtoSet((Set<TimeEntry>) user.getTimeEntries())
+                ratingMapper.toDtoSet(user.getRatings()),
+                timeEntryMapper.toDtoSet(user.getTimeEntries())
         );
     }
 }

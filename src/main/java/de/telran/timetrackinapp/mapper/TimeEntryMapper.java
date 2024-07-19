@@ -16,7 +16,7 @@ public class TimeEntryMapper implements Mapper<TimeEntry, TimeEntryResponseDto> 
                 timeEntry.getDate(),
                 timeEntry.getCategory(),
                 timeEntry.getTimeSpent(),
-                timeEntry.getUserId().getId()
+                timeEntry.getUser().getId()
         );
     }
 

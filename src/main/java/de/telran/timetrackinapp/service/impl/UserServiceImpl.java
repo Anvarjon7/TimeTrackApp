@@ -32,8 +32,9 @@ public class UserServiceImpl implements UserService {
                 .lastName(userRequestDto.getLastName())
                 .email(userRequestDto.getEmail())
                 .password(userRequestDto.getPassword())
+                .averageRating(0.0)
                 .role(userRequestDto.getRole())
-                .creationDate(new Timestamp(System.currentTimeMillis()))
+                .createdAt(new Timestamp(System.currentTimeMillis()))
                 .build();
 
         return userRepository.save(user);
@@ -90,7 +91,7 @@ public class UserServiceImpl implements UserService {
     public User findById(Long id) {
 
         return userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User with email " + id + " not found!")); // #TODO own Exception
+                .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found!")); // #TODO own Exception
     }
 
 //    @Override

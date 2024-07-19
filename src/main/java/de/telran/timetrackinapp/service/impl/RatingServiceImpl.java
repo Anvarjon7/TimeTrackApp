@@ -1,16 +1,20 @@
 package de.telran.timetrackinapp.service.impl;
 
+import de.telran.timetrackinapp.dto.RatingCreateRequestDto;
 import de.telran.timetrackinapp.model.entity.rating.Rating;
 import de.telran.timetrackinapp.model.entity.user.User;
 import de.telran.timetrackinapp.repository.RatingRepository;
 import de.telran.timetrackinapp.service.RatingService;
 import de.telran.timetrackinapp.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService {
 
@@ -18,42 +22,39 @@ public class RatingServiceImpl implements RatingService {
     private final UserService userService;
 
     @Override
-    public Rating leaveRating(Long fromUserId, Long toUserId, int rating, String comment) {
+    public Rating leaveRating(RatingCreateRequestDto dto) {
 
-        validateRatingParameters(fromUserId, toUserId, rating);
+        User fromUser = userService.findById(dto.fromUserId());
+        User toUser = userService.findById(dto.toUserId());
 
-        User fromUser = userService.findById(fromUserId);
-        User toUser = userService.findById(toUserId);
+        if (fromUser == null || toUser == null) {
+            throw new IllegalArgumentException("Both fromUser and toUser must be valid users");
+        }
+
+        log.debug("Creating rating from user: {} to user: {}", fromUser.getId(), toUser.getId());
+        // Log the details for debugging purposes
+        log.debug("Creating rating from user: {} to user: {}", fromUser.getId(), toUser.getId());
 
         Rating newRating = Rating.builder()
-                .fromUserId(fromUser.getId())
-                .toUserId(toUser)
-                .rating(rating)
-                .comment(comment)
+                .fromUser(fromUser.getId())
+                .toUser(toUser.getId())
+                .grade(dto.grade())
+                .comment(dto.comment())
+                .createdAt(new Timestamp(System.currentTimeMillis()))
                 .build();
+
+        updateUserAverageRating(toUser.getId());
 
         return ratingRepository.save(newRating);
     }
 
-    private void validateRatingParameters(Long fromUserId, Long toUserId, int rating) {
-
-        if (fromUserId == null || fromUserId <= 0) {
-            throw new IllegalArgumentException("Invalid fromUserId: " + fromUserId);
-        }
-        if (toUserId == null || toUserId <= 0) {
-            throw new IllegalArgumentException("Invalid toUserId: " + toUserId);
-        }
-        if (rating < 1 || rating > 5) {
-            throw new IllegalArgumentException("Invalid rating: " + rating + ". Rating must be between 1 and 5.");
-        }
-    }
 
     @Override
     public void updateUserAverageRating(Long userId) {
         List<Rating> ratings = ratingRepository.findByToUserId(userId);
 
         double averageRating = ratings.stream()
-                .mapToInt(Rating::getRating).average().orElse(0.0);
+                .mapToDouble(Rating::getGrade).average().orElse(0.0);
         User user = userService.findById(userId);
         user.setAverageRating(averageRating);
         userService.save(user);

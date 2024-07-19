@@ -13,12 +13,11 @@ public class RatingMapper implements Mapper<Rating, RatingResponseDto> {
     public RatingResponseDto toDto(Rating rating) {
         return new RatingResponseDto(
                 rating.getId(),
-                rating.getFromUserId(),
-                rating.getToUserId().getId(),
-                rating.getRating(),
+                rating.getFromUser(),
+                rating.getToUser(),
                 rating.getGrade(),
                 rating.getComment(),
-                rating.getCreatedOn()
+                rating.getCreatedAt()
         );
     }
 

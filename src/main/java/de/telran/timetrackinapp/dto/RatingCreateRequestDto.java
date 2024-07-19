@@ -9,27 +9,17 @@ import java.sql.Timestamp;
 
 public record RatingCreateRequestDto(
 
-        @NotNull(message = "ID can not be empty")
-        Long id,
-
         @NotNull(message = "FromUser can not be empty")
         Long fromUserId,
 
         @NotNull(message = "ToUserId can not be empty")
         Long toUserId,
 
-        @Min(value = 1, message = "Rating must be at least 1")
-        @Max(value = 5, message = "Rating must be at most 5")
-        int rating,
-
         @Min(1)
         @Max(5)
         Long grade,
 
         @Size(max = 400, message = "Comment must be at most 400 characters")
-        String comment,
-
-        @NotNull(message = "Creation date can not be empty")
-        Timestamp createdOn
+        String comment
 ) {
 }

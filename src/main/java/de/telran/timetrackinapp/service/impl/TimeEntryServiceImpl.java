@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,10 +27,10 @@ public class TimeEntryServiceImpl implements TimeEntryService {
         User user = userService.findById(requestDto.userId());
 
         TimeEntry timeEntry = new TimeEntry();
-        timeEntry.setUserId(user);
-        timeEntry.setDate(requestDto.date());
+        timeEntry.getDate();
         timeEntry.setCategory(requestDto.category());
         timeEntry.setTimeSpent(requestDto.timeSpent());
+        timeEntry.setUser(user);
 
         return timeEntryRepository.save(timeEntry);
     }
@@ -37,11 +38,13 @@ public class TimeEntryServiceImpl implements TimeEntryService {
     @Override
     public TimeEntry update(Long id, TimeEntryRequestDto requestDto) {
 
-        TimeEntry existingTimeEntry = timeEntryRepository.findById(id).get();
+//        User user = userService.findById(id);
 
-        existingTimeEntry.setDate(requestDto.date());
+        TimeEntry existingTimeEntry = timeEntryRepository.findByUserId(id);
+
         existingTimeEntry.setCategory(requestDto.category());
         existingTimeEntry.setTimeSpent(requestDto.timeSpent());
+//        existingTimeEntry.setUser(user);
 
         return timeEntryRepository.save(existingTimeEntry);
     }
@@ -49,15 +52,15 @@ public class TimeEntryServiceImpl implements TimeEntryService {
     @Override
     public void delete(Long id) {
 
-        TimeEntry existingTimeEntry = timeEntryRepository.findById(id).get();
-
-        timeEntryRepository.delete(existingTimeEntry);
+        TimeEntry toDelete = timeEntryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        timeEntryRepository.delete(toDelete);
     }
 
     @Override
     public List<TimeEntry> getTimeEntriesForUser(Long userId) {
+        User user = userService.findById(userId);
 
-        return timeEntryRepository.findByUserId(userId);
+        return timeEntryRepository.findByUserId(user.getId());
     }
 
     @Override
