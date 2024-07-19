@@ -26,38 +26,40 @@ public class TimeEntryServiceImpl implements TimeEntryService {
         User user = userService.findById(requestDto.userId());
 
         TimeEntry timeEntry = new TimeEntry();
-        timeEntry.setUserId(user);
-        timeEntry.setDate(requestDto.date());
+        timeEntry.getDate();
         timeEntry.setCategory(requestDto.category());
         timeEntry.setTimeSpent(requestDto.timeSpent());
+        timeEntry.setUser(user);
 
         return timeEntryRepository.save(timeEntry);
     }
 
-    @Override
-    public TimeEntry update(Long id, TimeEntryRequestDto requestDto) {
-
-        TimeEntry existingTimeEntry = timeEntryRepository.findById(id).get();
-
-        existingTimeEntry.setDate(requestDto.date());
-        existingTimeEntry.setCategory(requestDto.category());
-        existingTimeEntry.setTimeSpent(requestDto.timeSpent());
-
-        return timeEntryRepository.save(existingTimeEntry);
-    }
+//    @Override
+//    public TimeEntry update(Long id, TimeEntryRequestDto requestDto) {
+//
+//        User user = userService.findById(id);
+//
+////        TimeEntry existingTimeEntry = timeEntryRepository.findByUserId(id);
+//
+////        existingTimeEntry.setCategory(requestDto.category());
+////        existingTimeEntry.setTimeSpent(requestDto.timeSpent());
+//////        existingTimeEntry.setUser(user);
+////
+////        return timeEntryRepository.save(existingTimeEntry);
+//    }
 
     @Override
     public void delete(Long id) {
 
-        TimeEntry existingTimeEntry = timeEntryRepository.findById(id).get();
-
-        timeEntryRepository.delete(existingTimeEntry);
+        TimeEntry toDelete = timeEntryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        timeEntryRepository.delete(toDelete);
     }
 
     @Override
     public List<TimeEntry> getTimeEntriesForUser(Long userId) {
+        User user = userService.findById(userId);
 
-        return timeEntryRepository.findByUserId(userId);
+        return timeEntryRepository.findByUserId(user.getId());
     }
 
     @Override

@@ -13,7 +13,7 @@ public record TimeEntryResponseDto(
 
         String category,
 
-        int timeSpent,
+        Integer timeSpent,
 
         @NotNull(message = "ID can not be empty")
         Long userId

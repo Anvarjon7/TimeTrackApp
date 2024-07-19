@@ -1,5 +1,6 @@
 package de.telran.timetrackinapp.model.entity.timeEntry;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import de.telran.timetrackinapp.model.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,15 +11,15 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Table(name = "time_entry")
-@EqualsAndHashCode(exclude = "userId")
-@ToString(exclude = "userId")
+@EqualsAndHashCode(exclude = "user")
+@ToString(exclude = "user")
 @NamedEntityGraphs({
         @NamedEntityGraph(
                 name = "time.entry.withUser",
-                attributeNodes = @NamedAttributeNode("userId")
+                attributeNodes = @NamedAttributeNode("user")
         )
 })
+@Table(name = "timeEntry")
 public class TimeEntry {
 
     @Id
@@ -31,13 +32,15 @@ public class TimeEntry {
     @Column(name = "category", nullable = false)
     private String category;
 
-    @Column(name = "time_spent", nullable = false)
-    private int timeSpent;
+    @Column(name = "timeSpent", nullable = false)
+    private Integer timeSpent;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JsonBackReference
     @Getter
     @Setter
-    private User userId;
-
+    private User user;
 }

@@ -8,7 +8,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -38,10 +38,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "firstName")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "lastName")
     private String lastName;
 
     @Column(name = "email", updatable = false, nullable = false, length = 50, unique = true)
@@ -50,21 +50,21 @@ public class User {
     @Column(name = "password", nullable = false, length = 50)
     private String password;
 
-    @Column(name = "average_rating")
-    private double averageRating;
+    @Column(name = "averageRating")
+    private Double averageRating;
 
     @CreatedDate
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy")
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private Timestamp creationDate;
+    @Column(name = "creationDate", nullable = false, updatable = false)
+    private Timestamp createdAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
 
-    @OneToMany(mappedBy = "toUserId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Rating> ratings;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Rating> ratings;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TimeEntry> timeEntries;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TimeEntry> timeEntries;
 }

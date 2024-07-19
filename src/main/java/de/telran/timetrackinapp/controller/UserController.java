@@ -64,15 +64,4 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-//    @PostMapping("/rate")
-//    public ResponseEntity<Void> rate(@RequestBody @Valid RatingCreateRequestDto ratingCreateRequestDto) {
-//
-//        userService.leaveRating(
-//                ratingCreateRequestDto.fromUserId(),
-//                ratingCreateRequestDto.toUserId(),
-//                ratingCreateRequestDto.rating(),
-//                ratingCreateRequestDto.comment()
-//        );
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
 }

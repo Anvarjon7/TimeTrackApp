@@ -20,8 +20,6 @@ public class RatingResponseDto {
 
     private Long toUser;
 
-    private int rating;
-
     private Long grade;
 
     private String comment;
